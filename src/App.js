@@ -115,14 +115,23 @@ export default class App extends Component {
       }
       return data2()
       }
-      console.log("Data3", data3())
 
       this.state.data=data3()
+  /*Tools*/
+  const data4=()=>{
+    if(filters.Tools.length>0){
+
+      console.log("Tools:",filters.Tools)
+    return data3().filter((item)=>{ return item.tools.some(tool=>{ return filters.Tools.includes(tool)})})
   }
-  
+  return data3()
+  }
+  console.log("Data final", data4())
+
+  this.state.data=data4()
 
 
-
+}
   render() {
     return (
       <div className="App">
@@ -148,7 +157,7 @@ export default class App extends Component {
       </div>
       <div className='listings'>
         {
-          Data.map(
+          this.state.data.map(
             (item)=>{
               return <div key={item.id} className='listing'>
               <div className="details">
