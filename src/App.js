@@ -7,13 +7,14 @@ export default class App extends Component {
     state={
       tags:Tags,
       data:Data,
-      filters:{},
+      filters:{
+        Role: [],
+        Level: [],
+        Languages: [],
+        Tools: []
+      }
       
 
-  }
-  componentDidUpdate(){
-    this.collect()
-    this.multiFilter(this.state.data, this.state.filters)
   }
 
   setRole=(role)=>{
@@ -22,6 +23,8 @@ export default class App extends Component {
     this.setState(
       this.state.tags=Obj
     )
+    this.collect()
+   this.multiFilter()
 
  
   }
@@ -31,6 +34,8 @@ export default class App extends Component {
     this.setState(
       this.state.tags=Obj
     )
+    this.collect()
+   this.multiFilter()
 
 
   }
@@ -41,6 +46,8 @@ export default class App extends Component {
     this.setState(
       this.state.tags=Obj
     )
+    this.collect()
+   this.multiFilter()
 
   } 
    setTool=(tool)=>{
@@ -49,10 +56,14 @@ export default class App extends Component {
     this.setState(
       this.state.tags=Obj
     )
+    this.collect()
+    this.multiFilter()
+ 
   }
     
     
   collect = () => {
+    console.log("Collecting")
     const collectedTrueKeys = {
       Role: [],
       Level: [],
@@ -79,59 +90,109 @@ export default class App extends Component {
 
 
   /*Filter function*/ 
-  multiFilter=(data, filters)=>{
-    console.log("Data0:",data)
+  multiFilter=()=>{
+    let data=this.state.data;
+    let filters=this.state.filters;
       /*  Role*/
         const data1=()=>{
+          console.log("one")
           if(filters.Role.length>0){
-            console.log("roles:", filters.Role)
 
-          return data.filter(item=>filters.Role.includes(item.role))
+          data= data.filter(item=>filters.Role.includes(item.role))
          }
-         return data
    }
-   this.state.data=data1()
 
   
-      console.log("Data1", data1())
     /*Level*/
         const data2=()=>{
-          if(filters.Level.length>0){
-            console.log("level:", filters.Level)
-          return data1().filter(item=>filters.Level.includes(item.level))
-        }
-        return data1()
-    }
-    this.state.data=data2()
+          console.log("two")
 
-      console.log("Data2", data2())
+          if(filters.Level.length>0){
+          data= data.filter(item=>filters.Level.includes(item.level))
+        }
+    }
+
 
 /*Languages*/
       const data3=()=>{
+        console.log("three")
+
         if(filters.Languages.length>0){
   
-          console.log("languages:",filters.Languages)
-        return data2().filter((item)=>{ return item.languages.some(lang=>{ return filters.Languages.includes(lang)})})
+        data= data.filter((item)=>{ return filters.Languages.every(lang=>{ return item.languages.includes(lang)})})
       }
-      return data2()
       }
 
-      this.state.data=data3()
   /*Tools*/
   const data4=()=>{
+    console.log("four")
+
     if(filters.Tools.length>0){
 
-      console.log("Tools:",filters.Tools)
-    return data3().filter((item)=>{ return item.tools.some(tool=>{ return filters.Tools.includes(tool)})})
+    data=data.filter((item)=>{ return filters.Tools.every(tool=>{ return item.tools.includes(tool)})})
   }
-  return data3()
   }
-  console.log("Data final", data4())
-
-  this.state.data=data4()
+  data1()
+  data2()
+  data3()
+  data4()
+this.state.data=data;
 
 
 }
+
+removeRole=(role)=>{
+  let Obj=this.state.tags;
+  Obj.Role[`${role}`]=false
+  this.setState(
+    this.state.tags=Obj
+  )
+  this.collect()
+  this.multiFilter()
+
+
+
+
+
+
+}
+removeLevel=(level)=>{
+  let Obj=this.state.tags;
+  Obj.Level[`${level}`]=false
+  this.setState(
+    this.state.tags=Obj
+  )
+  this.collect()
+  this.multiFilter()
+
+
+
+}
+removeLang=(lang)=>{
+  let Obj=this.state.tags;
+  Obj.Languages[`${lang}`]=false
+  this.setState(
+    this.state.tags=Obj
+  )
+  this.collect()
+  this.multiFilter()
+
+
+
+}
+removeTool=(tool)=>{
+  let Obj=this.state.tags;
+  Obj.Tools[`${tool}`]=false
+  this.setState(
+    this.state.tags=Obj
+  )
+  this.collect()
+  this.multiFilter()
+
+
+}
+
+
   render() {
     return (
       <div className="App">
@@ -139,21 +200,80 @@ export default class App extends Component {
   
       </div>
       <div className="filter-container">
-        <div className="filter-div">
-          <div className="filters">
+      {
+                    this.state.filters.Role.length>0||
+                    this.state.filters.Level.length>0||
+                    this.state.filters.Languages.length>0||
+                    this.state.filters.Tools.length>0
+                    ?
+                    <div className="filter-div">
+
+                    <div className="filters">
+                    {
+                        this.state.filters.Role.map(
+                          (role)=>{
+                            return <span key={role} className='filter'><span id={role} className='name'>{role}</span><span onClick={()=>{this.removeRole(role)}} className='delete'>X</span></span>
+          
+          
+                          }
+                        )
+                        
+                      }
+                                  {
+                        this.state.filters.Level.map(
+                          (level)=>{
+                            return <span key={level} className='filter'><span id={level} className='name'>{level}</span><span onClick={()=>{this.removeLevel(level)}} className='delete'>X</span></span>
+          
+          
+                          }
+                        )
+                        
+                      }
+          
+          
+                      {
+                        this.state.filters.Languages.map(
+                          (lang)=>{
+                            return <span key={lang} className='filter'><span id={lang} className='name'>{lang}</span><span onClick={()=>{this.removeLang(lang)}} className='delete'>X</span></span>
+          
+          
+                          }
+                        )
+                        
+                      }
+                     {
+                        this.state.filters.Tools.map(
+                          (tool)=>{
+                            return <span key={tool} className='filter'><span id={tool} className='name'>{tool}</span><span onClick={()=>{this.removeTool(tool)}} className='delete'>X</span></span>
+          
+          
+                          }
+                        )
+                        
+                      }
+          
+                      
+                      
+                  
+            
+                    </div>
+                    <div className="clear"> 
+                    <p className='clear-button'>Clear</p>
+            
+            
+                    </div>
+            
+                  </div>
+                  :
+                  <div></div>
         
-            <span className='filter'><span className='name'>Javascript</span><span className='delete'>X</span></span>
-            <span className='filter'><span className='name'>CSS</span><span className='delete'>X</span></span>
-            <span className='filter'><span className='name'>Ruby</span><span className='delete'>X</span></span>
-  
-          </div>
-          <div className="clear"> 
-          <p className='clear-button'>Clear</p>
-  
-  
-          </div>
-  
-        </div>
+      
+            
+
+
+          }
+       
+
       </div>
       <div className='listings'>
         {
