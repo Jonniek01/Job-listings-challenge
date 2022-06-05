@@ -43,11 +43,11 @@ body{
   display: none;
 }
 .filter-div{
-  background-color:  hsl(180, 31%, 95%);
+  background-color:  white;
   padding: 0.5%;
-  height: 20px;
   width: 70%;
   border-radius: 5px;
+  display: flex;
   box-shadow: 0px 0px 12px 4px rgba(0,0,0,0.75);
 -webkit-box-shadow: 0px 0px 12px 4px rgba(0,0,0,0.75);
 -moz-box-shadow: 0px 0px 12px 4px rgba(0,0,0,0.75);
@@ -64,16 +64,147 @@ body{
 }
 .listing{
   width: 70%;
+  height: 20vh;
   display: flex;
-  background-color:  hsl(180, 31%, 95%);
-  margin: 0.5%;
+  background-color:  white;
+  margin: 0.5% ;
+  padding: 0.7% 1.5% 0.7% 1.5%;
+  align-items: center;
+
   box-shadow: 0px 0px 12px 4px rgba(0,0,0,0.75);
 -webkit-box-shadow: 0px 0px 12px 4px rgba(0,0,0,0.75);
 -moz-box-shadow: 0px 0px 12px 4px rgba(0,0,0,0.75);
 }
+.details{
+  width: 50%;
+  display: flex;
+}
+.filter-options{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap:7px;
+  width: 50%;
+
+}
+.filter-options button{
+  color:  hsl(180, 14%, 20%);
+  border: 0;
+  background-color:hsl(180, 31%, 95%) ;
+  padding: 4px;
+  cursor: pointer;
+  border-radius: 5px;
+  
+
+
+}
+.filter-options button:hover{
+  color: white;
+  background-color:  hsl(180, 14%, 20%);
+
+}
+.heading{
+  display: flex;
+  gap: 5px;
+}
+.company{
+  color:  hsl(180, 14%, 20%);
+
+
+}
+.new{
+  background-color:  hsl(180, 14%, 20%);
+  color: white;
+  border-radius: 25px;
+  padding: 2px;
+}
+.featured{
+  background-color:  black;
+  color: white;
+  border-radius: 25px;
+  padding: 2px;
+
+}
+.details-contents{
+  display: flex;
+  flex-direction: column;
+  gap: 10%;
+  margin-left: 1%;
+}
+.more-details{
+  color:  hsl(180, 14%, 20%);
+
+
+}
+.filters{
+  width: 95%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2%;
+}
+.filter{
+  display: flex;
+
+  background-color: hsl(180, 31%, 95%);
+  height: 20px;
+}
+.name{
+  height: 100%;
+  padding: 3px;
+
+
+}
+.delete{
+  color:white;
+  background-color:  hsl(180, 14%, 20%);
+  height: 100%;
+  padding: 3px;
+  cursor: pointer;
+}
+.clear{
+  text-align: right;
+}
+.clear-button{
+  text-decoration: underline;
+  color:  hsl(180, 14%, 20%);
+  cursor: pointer;
+
+}
 @media only screen and (max-width: 600px) {
   .head{
     background: url(./images/bg-header-mobile.svg);
+  }
+  .listing{
+    display: flex;
+    flex-direction: column;
+    margin: 4%;
+    width: 70%;
+  
+  }
+  .details{
+    width: 100%;
+
+  }
+  .filter-options{
+    display: flex;
+    align-items: flex-start;
+    justify-content: left;
+    flex-wrap: wrap;
+    gap:7px;
+    width: 100%;
+   padding-top: 15px;
+  
+  }
+  .image{
+    margin-top: -20px;
+    z-index: 9999;
+    position: absolute;
+    height:50px ;
+  }
+  .details-contents{
+    padding-top: 30px; 
+
   }
 
 }
