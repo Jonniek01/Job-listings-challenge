@@ -7,12 +7,13 @@ export default class App extends Component {
     state={
       tags:Tags,
       data:Data,
-      filters:{}
+      filters:{},
+      
 
   }
   componentDidUpdate(){
-    this.filteredCollected()
-    console.log(this.state.filters)
+    this.collect()
+    this.multiFilter(this.state.data, this.state.filters)
   }
 
   setRole=(role)=>{
@@ -51,7 +52,7 @@ export default class App extends Component {
   }
     
     
-  filteredCollected = () => {
+  collect = () => {
     const collectedTrueKeys = {
       Role: [],
       Level: [],
@@ -78,19 +79,48 @@ export default class App extends Component {
 
 
   /*Filter function*/ 
-  multiPropsFilter = (data, filters) => {
-    const filterKeys = Object.keys(filters);
-    return data.filter(product => {
-      return filterKeys.every(key => {
-        if (!filters[key].length) return true;
-        // Loops again if product[key] is an array .
-        if (Array.isArray(product[key])) {
-          return product[key].some(keyEle => filters[key].includes(keyEle));
+  multiFilter=(data, filters)=>{
+    console.log("Data0:",data)
+      /*  Role*/
+        const data1=()=>{
+          if(filters.Role.length>0){
+            console.log("roles:", filters.Role)
+
+          return data.filter(item=>filters.Role.includes(item.role))
+         }
+         return data
+   }
+   this.state.data=data1()
+
+  
+      console.log("Data1", data1())
+    /*Level*/
+        const data2=()=>{
+          if(filters.Level.length>0){
+            console.log("level:", filters.Level)
+          return data1().filter(item=>filters.Level.includes(item.level))
         }
-        return filters[key].includes(product[key]);
-      });
-    });
-  };
+        return data1()
+    }
+    this.state.data=data2()
+
+      console.log("Data2", data2())
+
+/*Languages*/
+      const data3=()=>{
+        if(filters.Languages.length>0){
+  
+          console.log("languages:",filters.Languages)
+        return data2().filter((item)=>{ return item.languages.some(lang=>{ return filters.Languages.includes(lang)})})
+      }
+      return data2()
+      }
+      console.log("Data3", data3())
+
+      this.state.data=data3()
+  }
+  
+
 
 
   render() {
