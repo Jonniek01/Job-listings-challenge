@@ -222,6 +222,33 @@ removeTool=(tool)=>{
 
 }
 
+clear=()=>{
+  this.setState(
+    this.state.data=Data
+  )
+
+  let Obj=this.state.tags;
+  Object.keys(Obj.Languages).forEach((key)=>{
+    Obj.Languages[key]=false;
+  })
+  Object.keys(Obj.Level).forEach((key)=>{
+    Obj.Level[key]=false;
+  })
+  Object.keys(Obj.Tools).forEach((key)=>{
+    Obj.Tools[key]=false;
+  })
+  Object.keys(Obj.Role).forEach((key)=>{
+    Obj.Role[key]=false;
+  })
+
+  this.setState(
+    this.state.tags=Obj
+  )
+  this.collect()
+  this.multiFilter()
+ 
+}
+
 
   render() {
     return (
@@ -288,7 +315,7 @@ removeTool=(tool)=>{
             
                     </div>
                     <div className="clear"> 
-                    <p className='clear-button'>Clear</p>
+                    <p onClick={()=>{this.clear()}} className='clear-button'>Clear</p>
             
             
                     </div>
