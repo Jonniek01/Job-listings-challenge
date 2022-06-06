@@ -83,7 +83,10 @@ export default class App extends Component {
     for (let tool in Tools) {
       if (Tools[tool]) collectedTrueKeys.Tools.push(tool);
     }   
+    this.setState(
       this.state.filters=collectedTrueKeys
+
+    )
     
   };
 
@@ -93,50 +96,64 @@ export default class App extends Component {
   multiFilter=()=>{
     let data=this.state.data;
     let filters=this.state.filters;
+
       /*  Role*/
         const data1=()=>{
-          console.log("one")
+          console.log("one",filters.Role)
           if(filters.Role.length>0){
+            this.setState(
+              this.state.data= data.filter(item=>filters.Role.includes(item.role))
 
-          data= data.filter(item=>filters.Role.includes(item.role))
+
+            )
+
          }
    }
 
   
     /*Level*/
         const data2=()=>{
-          console.log("two")
+          console.log("two",filters.Level)
 
           if(filters.Level.length>0){
-          data= data.filter(item=>filters.Level.includes(item.level))
+            this.setState(
+              this.state.data= data.filter(item=>filters.Level.includes(item.level))
+
+            )
         }
     }
 
 
 /*Languages*/
       const data3=()=>{
-        console.log("three")
+        console.log("three",filters.Languages)
 
         if(filters.Languages.length>0){
+          this.setState(
+            this.state.data= data.filter((item)=>{ return filters.Languages.every(lang=>{ return item.languages.includes(lang)})})
+
+          )
   
-        data= data.filter((item)=>{ return filters.Languages.every(lang=>{ return item.languages.includes(lang)})})
       }
       }
 
   /*Tools*/
   const data4=()=>{
-    console.log("four")
+    console.log("four",filters.Tools)
 
     if(filters.Tools.length>0){
+      this.setState(
+        this.state.data=data.filter((item)=>{ return filters.Tools.every(tool=>{ return item.tools.includes(tool)})})
 
-    data=data.filter((item)=>{ return filters.Tools.every(tool=>{ return item.tools.includes(tool)})})
+      )
+
+
   }
   }
   data1()
   data2()
   data3()
   data4()
-this.state.data=data;
 
 
 }
@@ -157,6 +174,10 @@ removeRole=(role)=>{
 
 }
 removeLevel=(level)=>{
+  this.setState(
+    this.state.data=Data
+  )
+
   let Obj=this.state.tags;
   Obj.Level[`${level}`]=false
   this.setState(
@@ -167,8 +188,13 @@ removeLevel=(level)=>{
 
 
 
+
 }
 removeLang=(lang)=>{
+  this.setState(
+    this.state.data=Data
+  )
+
   let Obj=this.state.tags;
   Obj.Languages[`${lang}`]=false
   this.setState(
@@ -181,6 +207,10 @@ removeLang=(lang)=>{
 
 }
 removeTool=(tool)=>{
+  this.setState(
+    this.state.data=Data
+  )
+
   let Obj=this.state.tags;
   Obj.Tools[`${tool}`]=false
   this.setState(
@@ -222,7 +252,7 @@ removeTool=(tool)=>{
                                   {
                         this.state.filters.Level.map(
                           (level)=>{
-                            return <span key={level} className='filter'><span id={level} className='name'>{level}</span><span onClick={()=>{this.removeLevel(level)}} className='delete'>X</span></span>
+                            return <span key={level} className='filter'><span id={level} className='name'>{level}</span><span onClick={()=>{ this.removeLevel(level)}} className='delete'>X</span></span>
           
           
                           }
