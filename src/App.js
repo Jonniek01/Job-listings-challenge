@@ -159,6 +159,10 @@ export default class App extends Component {
 }
 
 removeRole=(role)=>{
+  this.setState(
+    this.state.data=Data
+  )
+
   let Obj=this.state.tags;
   Obj.Role[`${role}`]=false
   this.setState(
